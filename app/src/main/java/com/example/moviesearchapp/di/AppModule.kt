@@ -41,7 +41,7 @@ object AppModule {
         Room.databaseBuilder(
             app,
             MovieDatabase::class.java,
-            "movie_db.db"
+            "myMovies_db.db"
         ).build()
 
     @Provides

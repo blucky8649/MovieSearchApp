@@ -7,7 +7,7 @@ import com.example.moviesearchapp.model.entities.MovieSavedEntity
 
 @Database(
     entities = [MovieSavedEntity::class, MovieListEntity::class],
-    version = 1
+    version = 3
 )
 abstract class MovieDatabase: RoomDatabase() {
     abstract val saveDao: MovieSaveDao

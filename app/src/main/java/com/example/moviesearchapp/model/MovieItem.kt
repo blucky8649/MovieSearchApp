@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MovieItem(
+    val id: Int,
     val title: String,
     val link: String,
     val image: String,

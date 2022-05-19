@@ -4,10 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/bluck/AndroidStudioProjects/MovieSearchApp/app/src/main/res/drawable-v24/ic_baseline_favorite_24.xml" value="0.134" />
+        <entry key="..\:/Users/bluck/AndroidStudioProjects/MovieSearchApp/app/src/main/res/drawable-v24/ic_baseline_favorite_24_red.xml" value="0.134" />
         <entry key="..\:/Users/bluck/AndroidStudioProjects/MovieSearchApp/app/src/main/res/drawable-v24/ic_baseline_favorite_border_24.xml" value="0.134" />
         <entry key="..\:/Users/bluck/AndroidStudioProjects/MovieSearchApp/app/src/main/res/drawable-v24/toggle_selector.xml" value="0.134" />
         <entry key="..\:/Users/bluck/AndroidStudioProjects/MovieSearchApp/app/src/main/res/layout/activity_main.xml" value="0.1403985507246377" />
         <entry key="..\:/Users/bluck/AndroidStudioProjects/MovieSearchApp/app/src/main/res/layout/fragment_hotel_list.xml" value="0.1403985507246377" />
+        <entry key="..\:/Users/bluck/AndroidStudioProjects/MovieSearchApp/app/src/main/res/layout/fragment_movie_list.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/bluck/AndroidStudioProjects/MovieSearchApp/app/src/main/res/layout/item_movie.xml" value="0.67" />
         <entry key="..\:/Users/bluck/AndroidStudioProjects/MovieSearchApp/app/src/main/res/layout/item_product.xml" value="0.6512605042016807" />
       </map>
     </option>

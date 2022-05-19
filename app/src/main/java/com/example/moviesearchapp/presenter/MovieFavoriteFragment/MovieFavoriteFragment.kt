@@ -9,14 +9,16 @@ import com.example.moviesearchapp.databinding.FragmentMovieListBinding
 
 class MovieFavoriteFragment: Fragment() {
     private var _binding: FragmentMovieListBinding? = null
-    private val binding = _binding!!
+    private val binding get() = _binding!!
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMovieListBinding.inflate(layoutInflater, container, false)
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return binding.root
     }
 
     override fun onDestroyView() {

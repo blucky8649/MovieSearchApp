@@ -7,8 +7,9 @@ import androidx.room.PrimaryKey
     tableName = "MOVIE_SAVE"
 )
 data class MovieSavedEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     val title: String,
-    @PrimaryKey
     val link: String,
     val image: String,
     val subtitle: String,

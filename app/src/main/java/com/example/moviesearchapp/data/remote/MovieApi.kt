@@ -4,6 +4,7 @@ import com.example.moviesearchapp.util.Constants.NAVER_ID
 import com.example.moviesearchapp.util.Constants.NAVER_SECRET
 import com.example.moviesearchapp.util.Constants.PAGE_SIZE
 import com.example.mymovieapp.model.Movie
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
@@ -21,5 +22,5 @@ interface MovieApi {
         display: Int? = PAGE_SIZE,
         @Query("start")
         start: Int
-    ): Movie
+    ): Response<Movie>
 }

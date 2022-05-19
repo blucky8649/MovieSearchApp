@@ -1,5 +1,6 @@
 package com.example.moviesearchapp.data.repository
 
+import android.util.Log
 import com.example.moviesearchapp.data.MovieRepository
 import com.example.moviesearchapp.data.local.MovieDatabase
 import com.example.moviesearchapp.data.remote.MovieApi
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 
 class MovieRepositoryImpl(
     private val db: MovieDatabase,
@@ -46,7 +48,7 @@ class MovieRepositoryImpl(
         return db.saveDao.getSavedState(keyword)
     }
 
-    override suspend fun getRemoteMovieList(searchQuery: String, start: Int): Movie {
+    override suspend fun getRemoteMovieList(searchQuery: String, start: Int): Response<Movie> {
         return api.getMovieList(query = searchQuery, start = start)
     }
 
