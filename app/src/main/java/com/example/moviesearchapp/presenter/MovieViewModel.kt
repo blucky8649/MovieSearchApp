@@ -54,13 +54,20 @@ class MovieViewModel @Inject constructor(
             currentPageNum = 1
             _isEndReached.emit(false)
         }
-        if(isEndReached.value) return@launch
+        if(isEndReached.value) {
+            _movieState.emit(Resource.Error("더 이상 불러올 데이터가 없습니다."))
+            return@launch
+        }
 
 
         val response = repository.getRemoteMovieList(searchQuery, currentPageNum)
 
         if (response.isSuccessful) {
             response.body()?.let {
+                if (it.items.isEmpty()) {
+                    _movieState.emit(Resource.Error("데이터가 없습니다."))
+                    return@launch
+                }
                 currentPageNum += it.items.size
                 val cachedList = it.items.map { movieItem ->
                     val state = async { repository.getLikeState(movieItem.link) }
