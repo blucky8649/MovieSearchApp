@@ -18,7 +18,7 @@ interface MovieListDao {
     fun getMovieList(): Flow<List<MovieListEntity>>
 
     @Query("DELETE FROM MOVIE_LIST")
-    fun clear(): Boolean
+    fun clear()
 
     @Query("SELECT COUNT(*) FROM MOVIE_LIST")
     suspend fun getCount(): Int
