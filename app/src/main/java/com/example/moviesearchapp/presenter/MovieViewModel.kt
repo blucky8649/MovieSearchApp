@@ -5,20 +5,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.moviesearchapp.data.MovieRepository
 import com.example.moviesearchapp.util.Resource
-import com.example.mymovieapp.model.MovieItem
+import com.example.moviesearchapp.model.MovieItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
     private val repository: MovieRepository
 ): ViewModel() {
-    private val _searchQuery: MutableStateFlow<String> = MutableStateFlow("간다")
+    private val _searchQuery: MutableStateFlow<String> = MutableStateFlow("")
     val searchQuery get() = _searchQuery as StateFlow<String>
 
     fun postKeyword(searchQuery: String) {
@@ -43,6 +42,8 @@ class MovieViewModel @Inject constructor(
 
     }
 
+    fun fetchFavoriteMovieList() = repository.getSavedMovieList()
+
     fun handleProductList(
         searchQuery: String = this.searchQuery.value,
         isRefresh: Boolean
@@ -56,13 +57,13 @@ class MovieViewModel @Inject constructor(
         if(isEndReached.value) return@launch
 
 
-        val response = repository.getRemoteMovieList(searchQuery, currentPageNum++)
+        val response = repository.getRemoteMovieList(searchQuery, currentPageNum)
 
         if (response.isSuccessful) {
             response.body()?.let {
+                currentPageNum += it.items.size
                 val cachedList = it.items.map { movieItem ->
                     val state = async { repository.getLikeState(movieItem.link) }
-                    Log.d("Lee", movieItem.pubDate.toString())
                     movieItem.copy(likeState = state.await())
                 }.toList()
                 cachedList.let { repository.insertAll(it) }
@@ -73,12 +74,11 @@ class MovieViewModel @Inject constructor(
                 }
             }
         } else {
-            _movieState.emit(Resource.Error("오류가 발생하였습니다.}"))
+            _movieState.emit(Resource.Error("오류가 발생하였습니다."))
         }
     }
     fun getData() = viewModelScope.launch {
         repository.getMovieListFlow().collectLatest { movieList ->
-            Log.d("ListFragment", movieList.size.toString())
             _movieState.emit(Resource.Success(movieList))
         }
     }

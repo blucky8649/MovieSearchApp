@@ -1,6 +1,5 @@
 package com.example.moviesearchapp.data.repository
 
-import android.util.Log
 import com.example.moviesearchapp.data.MovieRepository
 import com.example.moviesearchapp.data.local.MovieDatabase
 import com.example.moviesearchapp.data.remote.MovieApi
@@ -8,7 +7,7 @@ import com.example.moviesearchapp.util.toMovieItem
 import com.example.moviesearchapp.util.toMovieListEntity
 import com.example.moviesearchapp.util.toMovieSavedEntity
 import com.example.mymovieapp.model.Movie
-import com.example.mymovieapp.model.MovieItem
+import com.example.moviesearchapp.model.MovieItem
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

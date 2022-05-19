@@ -1,4 +1,4 @@
-package com.example.mymovieapp.model
+package com.example.moviesearchapp.model
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -6,7 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MovieItem(
-    val id: Int,
     val title: String,
     val link: String,
     val image: String,

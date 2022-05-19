@@ -2,11 +2,10 @@ package com.example.moviesearchapp.util
 
 import com.example.moviesearchapp.model.entities.MovieListEntity
 import com.example.moviesearchapp.model.entities.MovieSavedEntity
-import com.example.mymovieapp.model.MovieItem
+import com.example.moviesearchapp.model.MovieItem
 
 fun MovieListEntity.toMovieItem(): MovieItem {
     return MovieItem(
-        id = this.id,
         title = this.title,
         link = this.link,
         image = this.image,
@@ -35,7 +34,6 @@ fun MovieItem.toMovieListEntity(): MovieListEntity {
 
 fun MovieSavedEntity.toMovieItem(): MovieItem {
     return MovieItem(
-        id = this.id,
         title = this.title,
         link = this.link,
         image = this.image,
@@ -50,7 +48,6 @@ fun MovieSavedEntity.toMovieItem(): MovieItem {
 
 fun MovieItem.toMovieSavedEntity(): MovieSavedEntity {
     return MovieSavedEntity(
-        id = this.id,
         title = this.title,
         link = this.link,
         image = this.image,

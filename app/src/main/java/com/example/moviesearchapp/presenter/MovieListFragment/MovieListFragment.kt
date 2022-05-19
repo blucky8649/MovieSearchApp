@@ -2,23 +2,28 @@ package com.example.moviesearchapp.presenter.MovieListFragment
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AbsListView
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moviesearchapp.R
 import com.example.moviesearchapp.databinding.FragmentMovieListBinding
 import com.example.moviesearchapp.presenter.MovieViewModel
 import com.example.moviesearchapp.presenter.adapters.MovieListAdapter
 import com.example.moviesearchapp.util.Constants.PAGE_SIZE
 import com.example.moviesearchapp.util.Resource
+import com.example.moviesearchapp.util.removeTags
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -41,9 +46,23 @@ class MovieListFragment: Fragment() {
         setupSwipeRefresh()
         collectMovieItemState()
         collectEndPageState()
-
+        handleSearchKeyword()
         return binding.root
     }
+    private fun handleSearchKeyword() {
+        var job: Job? = null
+        binding.etSearch.addTextChangedListener { editable ->
+            job?.cancel()
+            job = MainScope().launch {
+                delay(500L)
+                editable?.let {
+                    viewModel.postKeyword(editable.toString())
+                    binding.recyclerView.setPadding(0, 0, 0, 200)
+                }
+            }
+        }
+    }
+
     private fun collectEndPageState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.isEndReached.collectLatest { isEndReached ->
@@ -63,7 +82,7 @@ class MovieListFragment: Fragment() {
                     }
                     is Resource.Error -> {
                         hideProgressBar()
-                        Toast.makeText(activity, "${result.message}", Toast.LENGTH_LONG).show()
+                        Log.e("Error", "${result.message}")
                     }
                     is Resource.Loading -> {
                         showProgressBar()
@@ -90,9 +109,12 @@ class MovieListFragment: Fragment() {
             setPadding(0, 0, 0, 200)
 
         }
+        movieAdapter.setOnItemClickListener {
+            val action = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailFragment(it, removeTags(it.title)!!)
+            findNavController().navigate(action)
+        }
     }
     private fun showProgressBar() {
-        binding.progressBarMain.isVisible = true
         binding.progressBar.isVisible = true
         isLoading = true
     }
@@ -134,6 +156,22 @@ class MovieListFragment: Fragment() {
                 viewModel.handleProductList(viewModel.searchQuery.value, false)
                 isScrolling = false
             }
+        }
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.top_menu, menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.favorite -> {
+                findNavController().navigate(R.id.action_movieListFragment_to_movieFavoriteFragment)
+                true
+            }
+            else -> { true }
         }
     }
     override fun onDestroyView() {

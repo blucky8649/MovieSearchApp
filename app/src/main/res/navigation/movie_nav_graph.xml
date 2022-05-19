@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/movieListFragment"
         android:name="com.example.moviesearchapp.presenter.MovieListFragment.MovieListFragment"
-        android:label="MovieListFragment" >
+        android:label="영화 목록" >
         <action
             android:id="@+id/action_movieListFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment"
@@ -16,15 +16,29 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             />
+        <action
+            android:id="@+id/action_movieListFragment_to_movieFavoriteFragment"
+            app:destination="@id/movieFavoriteFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="com.example.moviesearchapp.presenter.MovieDetailFragment.MovieDetailFragment"
-        android:label="MovieDetailFragment" />
+        android:label="{movieTitle}">
+        <argument
+            android:name="movieItem"
+            app:argType="com.example.moviesearchapp.model.MovieItem" />
+        <argument
+            android:name="movieTitle"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/movieFavoriteFragment"
         android:name="com.example.moviesearchapp.presenter.MovieFavoriteFragment.MovieFavoriteFragment"
-        android:label="MovieFavoriteFragment" >
+        android:label="찜 목록" >
         <action
             android:id="@+id/action_movieFavoriteFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment"

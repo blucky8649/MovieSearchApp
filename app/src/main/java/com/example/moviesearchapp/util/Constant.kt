@@ -7,4 +7,7 @@ object Constants {
     const val START_PAGE = 1
     const val PAGE_SIZE = 10
     const val DELEY_500L = 500L
+
+    const val TYPE_MOVIE_ITEM = 0
+    const val TYPE_WEB_VIEW = 1
 }

@@ -7,9 +7,8 @@ import androidx.room.PrimaryKey
     tableName = "MOVIE_LIST"
 )
 data class MovieListEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
     val title: String,
+    @PrimaryKey
     val link: String,
     val image: String,
     val subtitle: String,

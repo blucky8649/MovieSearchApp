@@ -1,7 +1,7 @@
 package com.example.moviesearchapp.data
 
 import com.example.mymovieapp.model.Movie
-import com.example.mymovieapp.model.MovieItem
+import com.example.moviesearchapp.model.MovieItem
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 

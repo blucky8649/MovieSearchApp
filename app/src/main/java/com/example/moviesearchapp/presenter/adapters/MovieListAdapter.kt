@@ -2,6 +2,7 @@ package com.example.moviesearchapp.presenter.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,7 @@ import com.example.moviesearchapp.databinding.ItemMovieBinding
 import com.example.moviesearchapp.presenter.MovieViewModel
 import com.example.moviesearchapp.util.removeTags
 import com.example.moviesearchapp.util.removeVerticalBarFromText
-import com.example.mymovieapp.model.MovieItem
+import com.example.moviesearchapp.model.MovieItem
 
 class MovieListAdapter(
     private val viewModel: MovieViewModel
@@ -19,7 +20,7 @@ class MovieListAdapter(
     companion object {
         private val differCallback = object : DiffUtil.ItemCallback<MovieItem>() {
             override fun areItemsTheSame(oldItem: MovieItem, newItem: MovieItem): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.link == newItem.link
             }
 
             override fun areContentsTheSame(oldItem: MovieItem, newItem: MovieItem): Boolean {
@@ -35,12 +36,13 @@ class MovieListAdapter(
                 tvMovieTitle.text = removeTags(item.title)
                 tvRatingScore.text = item.userRating.toString()
                 ratingbarSmall.rating = item.userRating.div(2).toFloat()
-                tvActors.text = removeTags(item.actor)
+                tvActors.text = removeVerticalBarFromText(item.actor)
                 Glide.with(root)
                     .load(item.image)
                     .centerCrop()
                     .into(ivMovieImage)
-
+                layoutActors.isVisible = tvActors.text.isNotEmpty()
+                layoutDirectors.isVisible = tvDirectiors.text.isNotEmpty()
                 btnLike.apply {
                     isChecked = item.likeState
                     setOnClickListener {
@@ -61,6 +63,9 @@ class MovieListAdapter(
                     }
                 }
             }
+            itemView.setOnClickListener {
+                onItemClicklistener?.let { it(item) }
+            }
         }
     }
 
@@ -72,5 +77,9 @@ class MovieListAdapter(
 
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
         holder.bind(getItem(position))
+    }
+    private var onItemClicklistener: ((MovieItem) -> Unit)? = null
+    fun setOnItemClickListener(listener: (MovieItem) -> Unit) {
+        onItemClicklistener = listener
     }
 }

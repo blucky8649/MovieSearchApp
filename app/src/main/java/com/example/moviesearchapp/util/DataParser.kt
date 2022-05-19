@@ -8,5 +8,6 @@ fun removeTags(title: String?): String? {
 
 fun removeVerticalBarFromText(text: String): String {
     if (text.isEmpty()) return ""
-    return text.substring(0, text.length - 1)
+    var newText = text.replace("|", ", ")
+    return newText.substring(0, newText.length - 2)
 }
